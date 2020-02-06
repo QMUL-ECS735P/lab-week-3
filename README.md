@@ -1,4 +1,4 @@
-# Introduction to Python RDFlib 
+# Introduction to Python and RDFlib 
 
 > **Session objectives:**
 >   - Become familiar with using Python to create simple Semantic Web programs.
@@ -168,7 +168,7 @@ rdf:about="http://www.recshop.fake/cd/Hide_your_heart">
 '''
 ```
 
-The three apostorphes (`'''`) indicate a multiline string.
+The three apostrophes (`'''`) indicate a multiline string.
 
 ---
 
@@ -244,7 +244,7 @@ Look back and see how we printed out each namespace in the graph, do that again 
 Finally, serialise and print the graph again to see the new graph.
 
 ---
- q
+
 Now we're going to take the xml data we prepared at the start of this step and add it to our RDF graph.
 
 Begin by printing the number of triples currently in the graph using the `len` function:
