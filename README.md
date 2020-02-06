@@ -1,3 +1,5 @@
+This lab sheet and all other materials can be found on GitHub here: https://github.com/QMUL-ECS735P/lab-week-3/
+
 # Introduction to Python and RDFlib 
 
 > **Session objectives:**
@@ -42,7 +44,7 @@ module load python/3.6.6
 ```
 
 This step as crucial to ensure the machines load the correct version of python and the libraries we depend on. You will have to do this every week!
-
+https://github.com/QMUL-ECS735P/lab-week-3/
 If you type now `python` in the terminal you should see the following output:
 
 ```
