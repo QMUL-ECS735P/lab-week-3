@@ -1,6 +1,4 @@
-This lab sheet and all other materials can be found on GitHub here: https://github.com/QMUL-ECS735P/lab-week-3/
-
-# Introduction to Python and RDFlib 
+# Introduction to Python and RDFlib
 
 > **Session objectives:**
 >   - Become familiar with using Python to create simple Semantic Web programs.
@@ -32,6 +30,7 @@ If you are using one of the machines in the ITL, you will be able to follow alon
 
 To run the interactive notebooks, you will also need to install Jupyter: https://jupyter.org/
 
+
 ## 2. The RDFLib Graph
 We'll be working with the serialised RDF graph file `shakespeare.n3`. If it was not included with this document, you can download it yourself from: http://workingontologist.org/Examples/Chapter3/shakespeare.n3
 
@@ -44,7 +43,7 @@ module load python/3.6.6
 ```
 
 This step as crucial to ensure the machines load the correct version of python and the libraries we depend on. You will have to do this every week!
-https://github.com/QMUL-ECS735P/lab-week-3/
+
 If you type now `python` in the terminal you should see the following output:
 
 ```
@@ -61,11 +60,14 @@ Take a moment to familiarse yourself with python and the interactive shell by ru
 
 Before using functions and classes from RDFlib, we need to add some import declarations. Evaluate the following code line-by-line:
 
+
 ```python
 from __future__ import print_function, unicode_literals
 import warnings
 warnings.filterwarnings('ignore')
 ```
+
+
 ```python
 import rdflib
 from rdflib.graph import Graph, Store, URIRef, BNode, Literal
@@ -75,6 +77,7 @@ from rdflib import plugin
 
 The Graph class in RDFlib represents a set of triples. We're going to create a new Graph and populate it with the definitions in `shakespeare.n3`.
 
+
 ```python
 g = Graph()
 g.parse('shakespeare.n3', format = 'n3')
@@ -82,17 +85,20 @@ g.parse('shakespeare.n3', format = 'n3')
 
 If `shakespeare.n3` is saved in a different folder, make sure you write the correct path to the file. We can also create the graph by fetching the data directly from the internet:
 
+
 ```python
-g.parse('http://workingontologist.org/Examples/Chapter3/shakespeare.n3', format = 'n3')
+g.parse('https://raw.githubusercontent.com/QMUL-ECS735P/lab-week-3/master/shakespeare.n3', format = 'n3')
 ```
 
 The RDF graph is now loaded in memory. We can check the number of statements using the `len` function:
+
 
 ```python
 len(g)
 ```
 
 Or an internal representation of the object using `repr`:
+
 
 ```python
 repr(g)
@@ -102,12 +108,14 @@ Now, use a `for` loop to iterate through the contents of the graph (you can find
 
 > Python is whitespace sensitive! We don't use `{ ... }` to denote blocks of code, instead we use indentation such as spaces or tabs.
 
+
 ```python
 for st in g:
   print(st)
 ```
 
 We can also use *destructuring* to unpack the subject, predicate, and object automatically in the loop:
+
 
 ```python
 for s, p, o in g:
@@ -123,29 +131,21 @@ You can read more about the Graph class here: https://rdflib.readthedocs.io/en/4
 ## 3. Serialisation
 With our shakespeare graph still stored in the `g` variable, we can use the `serialize` method to see what the graph looks like in different formats:
 
+
 ```python
-print(g.serialize(format = 'nt').decode('utf-8'))
-print(g.serialize(format = 'turtle').decode('utf-8'))
-print(g.serialize(format = 'xml').decode('utf-8'))
+print(g.serialize(format = 'nt'))
+print(g.serialize(format = 'turtle'))
+print(g.serialize(format = 'xml'))
 ```
 
 Compare each format, note how the `turtle` format is much less verbose than N-triples (`nt`) or `xml`. Read up how to save files using python and save each serialisation to a new file such as `shakespeare.xml`. Here is a good place to start: https://www.w3schools.com/python/python_file_write.asp
 
-When you are finished, exit the interactive shell by either pressing `ctrl+d` or typing `exit()`
-
 ## 4. The RDF Store
 For this part of the lab, we'll be using RDFlib to create an RDF Store. Stores allow us to persist our graphs in muliple ways such as a SQL database. For simplicity, we'll be using an in-memory store: in your own time you might be interested in exploring how to use MySQL, SQLite, or Sleepycat.
 
-Create a new interactive python session by typing `python` like before. Once again we need to import the relevant libraries before we can use RDFlib's functions:
-
-```python
-import rdflib
-from rdflib.graph import Graph, Store, URIRef, Literal
-from rdflib.namespace import Namespace, RDF, RDFS
-from rdflib import plugin
-```
 
 We'll create some example RDF data to manipulate with. For reference, you can find that example data here: http://www.w3schools.com/rdf/rdf_example.asp.
+
 
 ```python
 rdf_xml_data = '''<?xml version="1.0"?>
@@ -172,15 +172,15 @@ rdf:about="http://www.recshop.fake/cd/Hide_your_heart">
 
 The three apostrophes (`'''`) indicate a multiline string.
 
----
-
 With our example data ready, we can begin by creating an empty RDF store:
 
+
 ```python
-memory_store = plugin.get('IOMemory', Store)()
+memory_store = plugin.get('Memory', Store)()
 ```
 
 Stores need a base URI to link concepts to, we'll use a fake example URI for this exercise:
+
 
 ```python
 graph_id = URIRef('http://example.com/foo')
@@ -188,11 +188,10 @@ graph_id = URIRef('http://example.com/foo')
 
 Finally, and as before, we'll create an RDF graph but this time we'll use the store and id defined above:
 
+
 ```python
 g = Graph(store = memory_store, identifier = graph_id)
 ```
-
----
 
 If you closed it, open back up the `shakespeare.n3` file in a text editor. Have a look at some of the properties defined, such as `married` or `partOf`. We're going to define some new triples using these properties.
 
@@ -200,9 +199,11 @@ What makes the Semantic Web powerful is the ability to reference and use concept
 
 RDFlib predefines the RDF and RDFS namespaces, but we're going to add two more from the `shakespeare.n3` file:
 
+
 ```python
 nslit = Namespace('http://www.workingontologist.org/Examples/Chapter3/shakespeare.owl#')
 nsbio = Namespace('http://www.workingontologist.org/Examples/Chapter3/biography.owl#')
+
 g.bind('lit',nslit)
 g.bind('bio', nsbio)
 ```
@@ -216,12 +217,14 @@ These namespaces correspond to the following namespaces defined in `shakespeare.
 
 We can check al the bound prefixes in our current graph with another `for` loop:
 
+
 ```python
 for (p, n) in g.namespaces():
   print("Prefix: " + str(p) + ". Corresponds to namespace: " + str(n))
 ```
 
 Now we have our namespaces defined, we can start adding new RDF triples to the graph. To do this we'll use the `g.add` method:
+
 
 ```python
 g.add( (nsbio['Cervantes'], RDF.type, nsbio['Person']) )
@@ -235,21 +238,30 @@ You might notice that some parts are neatly prefixed such as `rdfs:label` but `<
 
 Let's bind a new prefix `ex` to clear up our graph:
 
+
 ```python
 g.bind('ex', 'http://example.com')
 ```
 
-Print the serialised graph again and note how `bar` is now properly abbreviated.
+Printing the serialised graph again we can see `bar` is now properly abbreviated.
 
-Look back and see how we printed out each namespace in the graph, do that again and notice a new namespace has been added.
 
-Finally, serialise and print the graph again to see the new graph.
+```python
+print(g.serialize(format = 'turtle').decode('utf-8'))
+```
 
----
+Similarly, printing the namespaces again confirms a new namespace has been added.
+
+
+```python
+for (p, n) in g.namespaces():
+  print("Prefix: " + str(p) + ". Corresponds to namespace: " + str(n))
+```
 
 Now we're going to take the xml data we prepared at the start of this step and add it to our RDF graph.
 
 Begin by printing the number of triples currently in the graph using the `len` function:
+
 
 ```python
 print('Number of triples in the graph: %i' %len(g))
@@ -261,6 +273,7 @@ We should have 3 triples in the graph.
 
 Now, parse the xml data and store it in our RDF graph:
 
+
 ```python
 g.parse(data = rdf_xml_data, format = 'application/rdf+xml')
 ```
@@ -270,6 +283,7 @@ We can confirm the xml data was properly parsed by checking the number of triple
 The `g.objects` method allows us to query the graph and receive all objects that match the supplied subject and/or predicate. You can read about this method (and others) here: https://rdflib.readthedocs.io/en/4.2.2/intro_to_graphs.html
 
 Let's use it to print all music artists in our graph:
+
 
 ```python
 artists = g.objects(subject = None, predicate = URIRef('http://www.recshop.fake/cd#artist'))
@@ -281,6 +295,7 @@ Use everything you've learned so far to add some new data to the graph by creati
 
 ## 5. Visualising RDF Graphs
 There are a number of websites that allow us to visualise our graphs so we don't have to simply read plain text. These websites use a `.dot` file containing the tuples to produce the visualisation, so we will need to write a python function to convert our graph to this format.
+
 
 ```python
 def triplesToDot (triples, filename, nsdict):
@@ -303,6 +318,7 @@ Don't worry if you don't quite understand what's happening here, as you become m
 
 Next we're going to create a python dictionary of all the namespaces in our graph, a dictionary is a collection of key/value pairs.
 
+
 ```python
 namespaces = {}
 for (p, n) in g.namespaces():
@@ -311,6 +327,7 @@ for (p, n) in g.namespaces():
 ```
 
 Finally we'll call the `triplesToDot` function to create a `.dot` file from our graph:
+
 
 ```python
 triplesToDot(g, 'week-3.dot', namespaces)
