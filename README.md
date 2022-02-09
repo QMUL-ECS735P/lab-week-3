@@ -32,7 +32,7 @@ To run the interactive notebooks, you will also need to install Jupyter: https:/
 
 
 ## 2. The RDFLib Graph
-We'll be working with the serialised RDF graph file `shakespeare.n3`. If it was not included with this document, you can download it yourself from: http://workingontologist.org/Examples/Chapter3/shakespeare.n3
+We'll be working with the serialised RDF graph file `shakespeare.n3`. If it was not included with this document, you can download it yourself from: https://raw.githubusercontent.com/QMUL-ECS735P/lab-week-3/master/shakespeare.n3
 
 Open the file in a text editor and identify each RDF triple; how many are there? Have a look at both the prefixes and the defined triples. How many different concepts are defined in this RDF graph? How many properties?
 
@@ -126,7 +126,7 @@ for s, p, o in g:
 
 The actual elements in the triples are Python classes that represent URIRefs, blank nodes, and literals. Write a loop that uses the `type` function to print the type of each variable such as `type(s)`.
 
-You can read more about the Graph class here: https://rdflib.readthedocs.io/en/4.2.2/intro_to_graphs.html
+You can read more about the Graph class here: https://rdflib.readthedocs.io/en/6.1.1/intro_to_graphs.html
 
 ## 3. Serialisation
 With our shakespeare graph still stored in the `g` variable, we can use the `serialize` method to see what the graph looks like in different formats:
@@ -144,7 +144,7 @@ Compare each format, note how the `turtle` format is much less verbose than N-tr
 For this part of the lab, we'll be using RDFlib to create an RDF Store. Stores allow us to persist our graphs in muliple ways such as a SQL database. For simplicity, we'll be using an in-memory store: in your own time you might be interested in exploring how to use MySQL, SQLite, or Sleepycat.
 
 
-We'll create some example RDF data to manipulate with. For reference, you can find that example data here: http://www.w3schools.com/rdf/rdf_example.asp.
+We'll create some example RDF data to manipulate with. For reference, you can find that example data here: https://www.w3schools.com/xml/xml_rdf.asp.
 
 
 ```python
@@ -341,6 +341,11 @@ Open `week-3.dot` in a text editor, copy the text and paste it in one of these w
 These tools can be handy to get a clearer idea of what is happening when you change a graph. Continue using what you've learned today to manipulate your RDF graph in python. Use the `triplesToDot` function to visualise the changes you're making.
 
 ## 6. Extra Practice
-When you are finished, head on over to the RDFlib documentation here: https://rdflib.readthedocs.io/en/4.2.2/. Tasks under the **Getting started** heading cover the same material that we have covered today, so checking there is a good place if you're stuck or unclear of anything. To get a deeper understanding of how RDFlib works, check out some of the links under the **In depth** heading.
+When you are finished, head on over to the RDFlib documentation here: https://rdflib.readthedocs.io/en/6.1.1/. Tasks under the **Getting started** heading cover the same material that we have covered today, so checking there is a good place if you're stuck or unclear of anything. To get a deeper understanding of how RDFlib works, check out some of the links under the **In depth** heading.
 
-For an even more detailed resource, the O'Reilly book "Programming the Semantic Web" covers much of the material we will cover both in the labs and lectures and would serve as a useful reference throughout the module. You can access it for free here: https://proquestcombo.safaribooksonline.com/book/web-development/9780596802141
+For an even more detailed resource, the O'Reilly book "Programming the Semantic Web" covers much of the material we will cover both in the labs and lectures and would serve as a useful reference throughout the module.
+
+
+```python
+
+```
